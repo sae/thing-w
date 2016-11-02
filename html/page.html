@@ -1,0 +1,90 @@
+<!--name,stat-->
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+html{
+font-size: 120%;
+}
+
+button {
+font-size: 120%;
+display: inline-block;
+}
+
+div {
+ padding: 20px 10px 10px 10px;
+ text-align: center;
+}
+
+.b2 {
+width: 35%;
+}
+.r {
+float: right;
+}
+
+.l {
+float: left;
+}
+
+</style>
+<script type="text/javascript">
+function go(web){
+    window.location.href = web;}
+
+var c=new XMLHttpRequest();
+
+function ctrl(url) {
+  c.open("GET", url ,true); c.send();
+  getpwr();
+};
+
+var s1=new XMLHttpRequest();
+
+s1.onreadystatechange=function(){
+  if (s1.readyState==4 && s1.status==200){
+  var div = document.getElementById ("s1");
+  div.innerHTML = s1.responseText; 
+  }}
+
+var s2=new XMLHttpRequest();
+
+s2.onreadystatechange=function(){
+  if (s2.readyState==4 && s2.status==200){
+  var div = document.getElementById ("s2");
+  div.innerHTML = s2.responseText; 
+  }}
+
+function getname() { 
+    s1.open("GET", "/name" ,true);
+    s1.send();
+}
+
+function getpwr(){ 
+    s2.open("GET", "/pwr" ,true);
+    s2.send(); 
+}
+setInterval( getname, 9000);
+setInterval( getpwr, 3000);
+</script>
+
+</head>
+<html>
+<body onload="getname();getpwr();">
+<div>
+<label id="s1"> </label>
+<label>, power: </label><label id="s2"> </label>
+</div>
+<div>
+<button class="l" onclick="ctrl('/m10');" >-10%</button>
+<button class="b2" onclick="ctrl('/50');" >50%</button>
+<button class="r" onclick="ctrl('/p10');" >+10%</button>
+</div>
+<div>
+<button class="b2 l" align="left"  onclick="ctrl('/off');" >off</button>
+<button class="b2 r" align="right" onclick="ctrl('/on');" >on</button>
+</div>
+<body>
+</html>
